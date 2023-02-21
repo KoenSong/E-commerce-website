@@ -123,7 +123,7 @@ $(function() {
     }
     $(window).scroll(function() {
         toggleTool();
-        //滚动页面时，电梯导航的div相应变化-------------------------------------------------------------------------------------------------------------------------3
+        //滚动页面时，电梯导航的div相应变化-------------------------------------------------------------------------------------------------------------------------
         if (flag) {
             $(".floor .w").each(function(i, ele) {
                 if ($(document).scrollTop() >= $(ele).offset().top) {
@@ -134,16 +134,20 @@ $(function() {
         }
     });
 
-    // 点击电梯导航页面可以滚动到相应内容区域------------------------------------------------------------------------------------------------------------------------2
+    // 点击电梯导航页面可以滚动到相应内容区域
     $(".fixedtool li").click(function() {
         flag = false;
-        console.log($(this).index());
-        var current = $(".floor .w").eq($(this).index()).offset().top;
-        $("body, html").stop().animate({
-            scrollTop: current
-        }, function() {
-            flag = true;
-        });
+
+        var target = $(".floor").children().eq($(this).index());
+
+        if (target.length) {
+            var current = target.offset().top;
+            $("body, html").stop().animate({
+                scrollTop: current
+            }, function() {
+                flag = true;
+            });
+        }
 
         $(this).addClass("current").siblings().removeClass();
     });
