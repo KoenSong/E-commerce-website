@@ -108,11 +108,11 @@ window.addEventListener('load', function() {
 })
 
 $(function() {
-    var toolTop = $(".recommend").offset().top;
-    toggleTool();
-
     // 节流阀
     var flag = true;
+
+    //显示隐藏电梯导航
+    var toolTop = $(".recommend").offset().top;
 
     function toggleTool() {
         if ($(document).scrollTop() >= toolTop) {
@@ -121,18 +121,27 @@ $(function() {
             $(".fixedtool").fadeOut();
         };
     }
-    $(window).scroll(function() {
+
+    //页面滚动导航对应选择实现
+    function eachTool() {
         toggleTool();
-        //滚动页面时，电梯导航的div相应变化-------------------------------------------------------------------------------------------------------------------------
-        if (flag) {
-            $(".floor .w").each(function(i, ele) {
+        if (flag == true) {
+            $('.floor').children().each(function(i, ele) {
                 if ($(document).scrollTop() >= $(ele).offset().top) {
                     console.log(i);
-                    $(".fixedtool li").eq(i).addClass("current").siblings().removeClass();
+                    $('.fixedtool li').eq(i).addClass('current').siblings().removeClass('current');
                 }
             })
         }
-    });
+
+    }
+
+    toggleTool();
+    eachTool();
+    $(window).scroll(function(e) {
+        toggleTool();
+        eachTool();
+    })
 
     // 点击电梯导航页面可以滚动到相应内容区域
     $(".fixedtool li").click(function() {
